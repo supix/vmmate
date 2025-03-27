@@ -1,1 +1,61 @@
-<p>vm works!</p>
+<div class="card mt-3" [class]="{ 'powered-off-vm': !vm.poweredOn}">
+  <div class="card-body">
+    <div class="row">
+      <div class="card-text col-1 text-center">
+        @if (!vm.poweredOn) {
+        <div class="mt-1">
+          <button type="button" class="btn btn-sm" title="Power on the VM" [disabled]="vm.poweredOn" (click)="start(vm)">
+            <span class="h3" [class]="{ 'text-success': !vm.poweredOn, 'text-secondary': vm.poweredOn }"><i
+                class="bi bi-play-btn-fill"></i></span>
+          </button>
+        </div>
+        } @else {
+        <div class="mt-1">
+          <button type="button" class="btn btn-sm" title="Shut down the VM" [disabled]="!vm.poweredOn" (click)="shutdown(vm)">
+                <span class="h3" [class]="{ 'text-danger': vm.poweredOn, 'text-secondary': !vm.poweredOn }"><i
+                class="bi bi-stop-btn-fill"></i></span>
+          </button>
+        </div>
+       }
+      </div>
+      <div class="col-2">
+        <h4 class="card-title mt-2" [class]="{ 'hostname_poff': !vm.poweredOn, 'hostname': vm.poweredOn }">{{ vm.name }}</h4>
+      </div>
+      <div class="card-text col-3 text-center">
+        @if (vm.poweredOn) {
+        <div class="text-success power-msg">
+          Powered On
+          <button type="button" class="btn btn-sm" title="Extend activity">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+        </div>
+        <div class="text-secondary shut-msg">Shut down in {{ vm.powerOffTime! | countdown }}</div>
+        } @else {
+        <div class="text-muted power-msg">Powered Off</div>
+        }
+      </div>
+      <div class="card-text col-5 text-center text-success">
+        @if (!!vm.schedule) {
+        <div>
+          Schedule set
+          <button type="button" class="btn btn-sm" title="Cancel schedule" (click)="removeSchedule(vm)">
+            <i class="bi bi-x-square-fill text-danger"></i>
+          </button>
+
+        </div>
+        <div title="Power on time"><i class="bi bi-play-btn-fill me-2 text-secondary"></i>{{ vm.schedule!.powerOnTime | date:'E dd/MM, HH:mm'
+          }}</div>
+        <div title="Power off time"><i class="bi bi-stop-btn-fill me-2 text-secondary"></i>{{ vm.schedule!.powerOffTime | date:'E dd/MM, HH:mm'
+          }}</div>
+        } @else {
+        <div><span class="text-secondary">No schedule set</span></div>
+        <div>
+          <button type="button" class="btn btn-sm" title="Set schedule">
+            <i class="bi bi-clock text-primary"></i>
+          </button>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

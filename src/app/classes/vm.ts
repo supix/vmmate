@@ -1,9 +1,10 @@
 export class Vm {
     public constructor(
         public readonly name: string,
-        public readonly poweredOn: boolean,
-        public readonly powerOffTime?: Date,
-        public readonly schedule?: Schedule,
+        public readonly environment: string,
+        public poweredOn: boolean,
+        public powerOffTime?: Date,
+        public schedule?: Schedule,
     ) {}
 }
 
