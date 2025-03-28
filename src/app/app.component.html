@@ -22,27 +22,46 @@
 </nav>
 <div class="container py-3">
   <div class="row my-3">
+    <div class="card">
+      <div class="card-body row">
+        <div class="col-6">
+          <div class="title">Divisione</div>
+          <h4 class="user">SVI-DAPI</h4>
+        </div>
+        <div class="col-6 text-end">
+          Benvenuto <span class="user">Mario Rossi</span>
+          <i class="bi bi-person-circle"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row my-3">
     <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs">
-      <li [ngbNavItem]="1">
-        <button ngbNavLink>svil</button>
+      @for (env of ['svil', 'coll']; track env; let idx = $index) {
+      <li [ngbNavItem]="idx + 1">
+        <button ngbNavLink>{{ env == 'svil' ? 'SVILUPPO' : 'COLLAUDO' }}</button>
         <ng-template ngbNavContent>
-          @for (vm of filteredVms('svil'); track $index) {
-          <app-vm [vm]="vm"></app-vm>
-          } @empty {
-          <div>No items to display</div>
+          @for (srv of getAllServices(env); track srv) {
+            <div class="card mt-3">
+              <div class="row text-center">
+                <div class="col-2 service-name">
+                  {{ srv }}
+                </div>
+                <div class="col-10">
+                  <div class="card-body">
+                    @for (vm of filteredVms(srv, env); track vm.name) {
+                      <app-vm [vm]="vm"></app-vm>
+                      } @empty {
+                      <div>No items to display</div>
+                      }
+                  </div>
+                </div>
+              </div>
+            </div>
           }
         </ng-template>
       </li>
-      <li [ngbNavItem]="2">
-        <button ngbNavLink>coll</button>
-        <ng-template ngbNavContent>
-          @for (vm of filteredVms('coll'); track $index) {
-          <app-vm [vm]="vm"></app-vm>
-          } @empty {
-          <div>No items to display</div>
-          }
-        </ng-template>
-      </li>
+      }
     </ul>
 
     <div [ngbNavOutlet]="nav" class="mt-2"></div>

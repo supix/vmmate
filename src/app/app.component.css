@@ -1,0 +1,17 @@
+.user {
+    color: darkorange;
+    margin-right: 1ex;
+}
+
+.title {
+    color: gray;
+    font-size: 0.8em;
+    font-variant-caps: small-caps;
+}
+
+.service-name {
+    font-variant-caps: small-caps;
+    font-size: 2em;
+    margin-top: 3ex;
+    color: darkblue;
+}
